@@ -1,3 +1,3 @@
-import {getPicture} from './data';
+import {getPicture} from './data.js';
 
 console.log(getPicture());
