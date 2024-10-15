@@ -3,13 +3,6 @@
 * Студент: [Алексей Борщ](https://up.htmlacademy.ru/univer-js1/5/user/2500759).
 * Наставник: [Артём Новоселов](https://htmlacademy.ru/profile/id1195129).
 
----
-
-_Не удаляйте и не изменяйте самовольно файлы и папки:_
-_`.editorconfig`, `.eslintrc`, `.gitattributes`, `.gitignore`, `package-lock.json`, `package.json`., `.github`_
-
----
-
 [Как работать с Git на проекте](Contributing.md) | [Как работать над проектом](Workflow.md)
 
 ### Памятка
