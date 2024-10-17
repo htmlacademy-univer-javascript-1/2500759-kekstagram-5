@@ -1,3 +1,6 @@
 import {getPicture} from './data.js';
+import {processPicture} from './picture.js';
 
-console.log(getPicture());
+processPicture(getPicture());
+
+
