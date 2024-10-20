@@ -3,10 +3,10 @@ const container = document.querySelector('pictures');
 
 const createPicture = function({comments, description, likes, url}) {
   const picture = pictureTemplate.cloneNode(true);
-  picture.querySelector('.pucture__img').src = url;
-  picture.querySelector('.pucture__img').alt = description;
-  picture.querySelector('.pucture__comments').textContent = comments;
-  picture.querySelector('.pucture__likes').textContent = likes;
+  picture.querySelector('.picture__img').src = url;
+  picture.querySelector('.picture__img').alt = description;
+  picture.querySelector('.picture__comments').textContent = comments;
+  picture.querySelector('.picture__likes').textContent = likes;
 
   return picture;
 };
