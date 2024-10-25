@@ -1,8 +1,8 @@
 import {getPicture} from './data.js';
 import {processPicture} from './picture.js';
 
-processPicture(getPicture());
-
+const picturesContainer = document.querySelector('.pictures');
+processPicture(getPicture(), picturesContainer);
 // eslint-disable-next-line no-console
 console.log(getPicture());
 
