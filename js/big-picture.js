@@ -4,7 +4,7 @@ const commentListElement = bigPictureElement.querySelector('.social__comments');
 const commentLoadElement = bigPictureElement.querySelector('.comments-loader');
 const bodyElement = document.querySelector('body');
 const cancelElement = bigPictureElement.querySelector('.big-picture__cancel');
-const commentElementTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+const commentElementTemplate = document.querySelector('.social__comment');
 
 const createComment = function({ avatar, name, message }) {
   const comment = commentElementTemplate.cloneNode(true);
@@ -20,11 +20,10 @@ const renderComment = function(comments) {
   commentListElement.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  comments.forEach((item) => {
-    const comment = createComment(item);
-    fragment.append(comment);
+  comments.forEach((comment) => {
+    fragment.appendChild(createComment(comment));
   });
-  commentListElement.append(fragment);
+  //commentListElement.append(fragment);
 };
 
 const hidePicture = function() {
