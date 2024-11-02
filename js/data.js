@@ -39,7 +39,7 @@ const createMessage = () => Array.from(
 const createComment = () => ({
   id: commentId(),
   avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}.svg`,
-  massege: createMessage(),
+  message: createMessage(),
   name: getRandomArrayElement(NAMES),
 });
 
@@ -48,8 +48,8 @@ const createPicture = (index) => ({
   url: `photos/${index}.jpg`,
   description: getRandomArrayElement(DESCRIPTION),
   likes: getRandomInteger(LIKE_MIN, LIKE_MAX),
-  comment: Array.from(
-    {length: getRandomInteger(0, COMMENT_COUNT)},
+  comments: Array.from(
+    { length: getRandomInteger(0, COMMENT_COUNT) },
     createComment,
   ),
 });
