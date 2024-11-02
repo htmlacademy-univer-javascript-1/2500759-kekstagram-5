@@ -20,10 +20,11 @@ const renderComment = function(comments) {
   commentListElement.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  comments.forEach((comment) => {
-    fragment.appendChild(createComment(comment));
+  comments.forEach((item) => {
+    const comment = createComment(item);
+    fragment.append(comment);
   });
-  //commentListElement.append(fragment);
+  commentListElement.append(fragment);
 };
 
 const hidePicture = function() {

@@ -46,12 +46,12 @@ const createComment = () => ({
 const createPicture = (index) => ({
   id: index,
   url: `photos/${index}.jpg`,
-  description: `Описание #${index + 1}`,
+  description: getRandomArrayElement(DESCRIPTION),
   likes: getRandomInteger(LIKE_MIN, LIKE_MAX),
-  comment: Array.from(
-    {length: getRandomInteger(0, COMMENT_COUNT)},
+  comments: Array.from(
+    { length: getRandomInteger(0, COMMENT_COUNT) },
     createComment,
-  ).map((comment) => comment.message).join('. '),
+  ),
 });
 
 const getPicture = () => Array.from(
