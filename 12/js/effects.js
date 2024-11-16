@@ -106,19 +106,26 @@ const hideSlide = () => {
   sliderContainerElement.classList.add('hidden');
 };
 
-const destroySlider = () => {
+const updateSlider = () => {
   if (sliderElement.noUiSlider) {
-    sliderElement.noUiSlider.destroy();
+    const { min, max, step } = effectToSliderOptionals[chosenEffect];
+    sliderElement.noUiSlider.updateOptions({
+      range: {min, max},
+      step,
+      start: max,
+    });
   }
-  setImageStyle();
 };
 
 const setSlider = () => {
-  destroySlider();
   hideSlide();
 
   if (chosenEffect !== Effect.DEFAULT) {
-    createSlider(effectToSliderOptionals[chosenEffect]);
+    if (!sliderElement.noUiSlider) {
+      createSlider(effectToSliderOptionals[chosenEffect]);
+    } else {
+      updateSlider();
+    }
     showSlide();
   }
 };
@@ -137,8 +144,9 @@ const onEffectChange = (evt) => {
 };
 
 function init() {
+  hideSlide();
   setSlider();
   effectElement.addEventListener('change', onEffectChange);
 }
 
-export{ init, reset };
+export { init, reset };
