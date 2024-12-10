@@ -21,7 +21,6 @@ const form = document.querySelector('.img-upload__form');
 const overlay = form.querySelector('.img-upload__overlay');
 const cancelButton = form.querySelector('.img-upload__cancel');
 const fileField = form.querySelector('.img-upload__input');
-const commentField = form.querySelector('.text_description');
 const submitButton = form.querySelector('.img-upload__submit');
 const hashtagField = form.querySelector('.text__hashtags');
 const photoPreview = form.querySelector('.img-upload__preview img');
@@ -54,7 +53,10 @@ const toggleSubmitButton = (isDisabled) => {
   submitButton.textContent = isDisabled ? SubmitButtonText.SUBMITTING : SubmitButtonText.IDLE;
 };
 
-const isTextFieldFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
+const isAnyFormFieldFocused = () => {
+  const focusedElement = document.activeElement;
+  return focusedElement !== null && form.contains(focusedElement);
+};
 
 const isErrorMessageShown = () => Boolean(document.querySelector('.error'));
 
@@ -75,7 +77,7 @@ const hasUniqueTags = (value) => {
 };
 
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape' && !isTextFieldFocused() && !isErrorMessageShown()) {
+  if (evt.key === 'Escape' && !isAnyFormFieldFocused() && !isErrorMessageShown()) {
     evt.preventDefault();
     hideModal();
   }
