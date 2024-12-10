@@ -78,7 +78,6 @@ const showBigPicture = function(data) {
   bodyElement.classList.add('modal-open');
   commentLoadElement.classList.add('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
-
   renderPictureDetails(data);
   comments = data.comments;
   if (comments.length > 0) {
