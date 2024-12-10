@@ -8,8 +8,12 @@ const cancelButton = form.querySelector('.img-upload__cancel');
 const fileField = form.querySelector('.img-upload__input');
 const submitButton = form.querySelector('.img-upload__submit');
 const hashtagField = form.querySelector('.text__hashtags');
+const photoPreview = form.querySelector('.img-upload__preview img');
+const effectsPreviews = form.querySelectorAll('.effects__preview');
+
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const ErrorText = {
   INVALID_COUNT: `Максимум ${MAX_HASHTAG_COUNT} хештегов`,
   NOT_UNIQUE: 'Хешетеги должны быть уникальными',
@@ -57,23 +61,16 @@ function onDocumentKeydown(evt) {
   }
 }
 
-const onCancelButtonClick = () => {
-  hideModal();
+const toggleSubmitButton = (isDisabled) => {
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = isDisabled ? SubmitButtonText.SUBMITTING : SubmitButtonText.IDLE;
 };
 
-const onFileInputChange = () => {
-  showModal();
-};
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+const isValidType = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
 };
-
-fileField.addEventListener('change', onFileInputChange);
-cancelButton.addEventListener('click', onCancelButtonClick);
-form.addEventListener('submit', onFormSubmit);
-initEffect();
 
 const normalizeTags = (tagString) => tagString.trim().split(' ').filter((tag) => Boolean(tag.length));
 
@@ -86,17 +83,22 @@ const hasUniqueTags = (value) => {
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-pristine.addValidator(hashtagField, hasValidCount, ErrorText.INVALID_COUNT, 3, true);
-
-pristine.addValidator(hashtagField, hasUniqueTags, ErrorText.NOT_UNIQUE, 1, true);
-
-pristine.addValidator(hashtagField, hasValidTags, ErrorText.INVALID_PATTERN, 2, true);
-
-const toggleSubmitButton = (isDisabled) => {
-  submitButton.disabled = isDisabled;
-  submitButton.textContent = isDisabled ? SubmitButtonText.SUBMITTING : SubmitButtonText.IDLE;
+const onCancelButtonClick = () => {
+  hideModal();
 };
 
+const onFileInputChange = () => {
+  const file = fileField.files[0];
+
+  if (file && isValidType(file)) {
+    resetEffect();
+    photoPreview.src = URL.createObjectURL(file);
+    effectsPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url('${photoPreview.src}')`;
+    });
+  }
+  showModal();
+};
 
 const setOnFormSubmit = (callback) => {
   form.addEventListener('submit', async (evt) => {
@@ -110,5 +112,22 @@ const setOnFormSubmit = (callback) => {
     }
   });
 };
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  pristine.validate();
+};
+
+
+fileField.addEventListener('change', onFileInputChange);
+cancelButton.addEventListener('click', onCancelButtonClick);
+form.addEventListener('submit', onFormSubmit);
+initEffect();
+
+pristine.addValidator(hashtagField, hasValidCount, ErrorText.INVALID_COUNT, 3, true);
+
+pristine.addValidator(hashtagField, hasUniqueTags, ErrorText.NOT_UNIQUE, 1, true);
+
+pristine.addValidator(hashtagField, hasValidTags, ErrorText.INVALID_PATTERN, 2, true);
 
 export{hideModal, setOnFormSubmit};
